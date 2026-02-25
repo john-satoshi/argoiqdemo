@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liquid Glass Rectangle Experiment</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas id="gl" aria-label="Liquid glass WebGL canvas"></canvas>
+
+    <section class="panel" aria-label="Experiment controls">
+      <h1>Liquid Glass Rectangle</h1>
+      <label>
+        Corner Radius
+        <input id="cornerRadius" type="range" min="4" max="140" step="1" value="40" />
+        <span id="cornerRadiusValue">40px</span>
+      </label>
+      <label>
+        Refraction Thickness
+        <input id="thickness" type="range" min="4" max="80" step="1" value="24" />
+        <span id="thicknessValue">24</span>
+      </label>
+      <label>
+        Blur Radius
+        <input id="blurRadius" type="range" min="1" max="36" step="1" value="14" />
+        <span id="blurRadiusValue">14</span>
+      </label>
+      <label>
+        Frost Level
+        <input id="frostLevel" type="range" min="0" max="100" step="1" value="8" />
+        <span id="frostLevelValue">8%</span>
+      </label>
+      <label>
+        Shadow X
+        <input id="shadowX" type="range" min="-40" max="40" step="1" value="0" />
+        <span id="shadowXValue">0</span>
+      </label>
+      <label>
+        Shadow Y
+        <input id="shadowY" type="range" min="-40" max="40" step="1" value="4" />
+        <span id="shadowYValue">4</span>
+      </label>
+      <label>
+        Shadow Blur
+        <input id="shadowBlur" type="range" min="1" max="80" step="1" value="32" />
+        <span id="shadowBlurValue">32</span>
+      </label>
+      <label>
+        Shadow Spread
+        <input id="shadowSpread" type="range" min="-20" max="30" step="1" value="0" />
+        <span id="shadowSpreadValue">0</span>
+      </label>
+      <label>
+        Shadow Opacity
+        <input id="shadowOpacity" type="range" min="0" max="60" step="1" value="18" />
+        <span id="shadowOpacityValue">18%</span>
+      </label>
+    </section>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

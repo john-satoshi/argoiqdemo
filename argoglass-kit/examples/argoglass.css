@@ -1,0 +1,11 @@
+.argoglass-surface {
+  backdrop-filter: blur(var(--argoglass-blur-radius, 1px));
+  background: var(--argoglass-tint, rgba(255, 255, 255, 0.13));
+  border-radius: var(--argoglass-radius, 24px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    calc(var(--argoglass-shadow-x, 0px) * 0.7)
+    calc(var(--argoglass-shadow-y, -10px) * 0.7)
+    calc(var(--argoglass-shadow-expand, 25px) * 0.8)
+    rgba(0, 0, 0, 0.18);
+}

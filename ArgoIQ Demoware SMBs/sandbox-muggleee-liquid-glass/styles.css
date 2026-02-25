@@ -1,0 +1,63 @@
+:root {
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #9e9ea1;
+}
+
+#gl {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.panel {
+  position: fixed;
+  top: 12px;
+  left: 8px;
+  width: 360px;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f2f2f3;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+  z-index: 2;
+}
+
+.panel label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  color: #2a2a2a;
+  margin-top: 10px;
+}
+
+.panel input[type="range"] {
+  width: 100%;
+  margin: 8px 0 2px;
+}
+
+.upload-label {
+  margin-top: 16px;
+}
+
+.panel input[type="file"] {
+  width: 100%;
+  margin-top: 8px;
+}

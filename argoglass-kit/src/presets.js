@@ -1,0 +1,54 @@
+export const ARGO_GLASS_BASE = Object.freeze({
+  version: '1.0.0',
+  timestamp: '2026-02-25T22:37:36.332Z',
+  controls: {
+    language: ['en-US'],
+    refThickness: 20,
+    refFactor: 1.4,
+    refDispersion: 7,
+    refFresnelRange: 30,
+    refFresnelHardness: 20,
+    refFresnelFactor: 20,
+    glareRange: 30,
+    glareHardness: 20,
+    glareFactor: 90,
+    glareConvergence: 50,
+    glareOppositeFactor: 80,
+    glareAngle: -45,
+    blurRadius: 1,
+    blurEdge: true,
+    tint: {
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 0.13,
+    },
+    shadowExpand: 25,
+    shadowFactor: 16.43,
+    shadowPosition: {
+      x: 0,
+      y: -10,
+    },
+    bgType: 3,
+    shapeWidth: 200,
+    shapeHeight: 200,
+    shapeRadius: 80,
+    shapeRoundness: 5,
+    mergeRate: 0.05,
+    showShape1: true,
+    springSizeFactor: 10,
+    step: 9,
+  },
+});
+
+export const PRESET_REGISTRY = Object.freeze({
+  'ArgoGlass-Base': ARGO_GLASS_BASE,
+});
+
+export function getArgoGlassPreset(presetName = 'ArgoGlass-Base') {
+  const preset = PRESET_REGISTRY[presetName];
+  if (!preset) {
+    throw new Error(`Unknown ArgoGlass preset: ${presetName}`);
+  }
+  return structuredClone(preset);
+}

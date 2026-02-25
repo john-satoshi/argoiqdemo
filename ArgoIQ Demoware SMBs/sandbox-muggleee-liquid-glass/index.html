@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muggleee Liquid Glass Sandbox</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas id="gl"></canvas>
+
+    <section class="panel" aria-label="Liquid glass controls">
+      <label>Circle Radius: <span id="radiusValue">0.30</span></label>
+      <input id="radius" type="range" min="5" max="60" step="1" value="30" />
+
+      <label>Distortion Strength: <span id="distortValue">2.30</span></label>
+      <input id="distort" type="range" min="0" max="50" step="1" value="23" />
+
+      <label>Color Dispersion: <span id="dispersionValue">0.70</span></label>
+      <input id="dispersion" type="range" min="0" max="20" step="1" value="7" />
+
+      <label>Shadow Intensity: <span id="shadowIntensityValue">0.30</span></label>
+      <input id="shadowIntensity" type="range" min="0" max="100" step="1" value="30" />
+
+      <label>Shadow Offset X: <span id="shadowOffsetXValue">0.01</span></label>
+      <input id="shadowOffsetX" type="range" min="-30" max="30" step="1" value="1" />
+
+      <label>Shadow Offset Y: <span id="shadowOffsetYValue">0.08</span></label>
+      <input id="shadowOffsetY" type="range" min="-30" max="30" step="1" value="8" />
+
+      <label>Shadow Blur: <span id="shadowBlurValue">0.40</span></label>
+      <input id="shadowBlur" type="range" min="1" max="100" step="1" value="40" />
+
+      <label>Highlight Intensity: <span id="highlightIntensityValue">0.40</span></label>
+      <input id="highlightIntensity" type="range" min="0" max="100" step="1" value="40" />
+
+      <label>Highlight Size: <span id="highlightSizeValue">1.25</span></label>
+      <input id="highlightSize" type="range" min="50" max="200" step="1" value="125" />
+
+      <label>Highlight Offset X: <span id="highlightOffsetXValue">0.01</span></label>
+      <input id="highlightOffsetX" type="range" min="-30" max="30" step="1" value="1" />
+
+      <label>Highlight Offset Y: <span id="highlightOffsetYValue">0.03</span></label>
+      <input id="highlightOffsetY" type="range" min="-30" max="30" step="1" value="3" />
+
+      <label class="upload-label">Upload Background:</label>
+      <input id="uploadBg" type="file" accept="image/*" />
+    </section>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
