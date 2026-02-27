@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArgoIQ Demoware SMBs - Case Detail</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <filter id="frosted-rect" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence id="frosted-rect-noise" type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="5" result="noise" />
+        <feGaussianBlur id="frosted-rect-gauss" in="SourceGraphic" stdDeviation="2.25" result="blurred" />
+        <feDisplacementMap id="frosted-rect-displace" in="blurred" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <main class="demo-bg dashboard-screen operator-screen" aria-label="Case detail screen">
+      <video class="bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="https://d1jlu00ptx05u6.cloudfront.net/human+backgorund+opt.mp4" type="video/mp4" />
+      </video>
+
+      <nav id="appNavbarMount" class="app-navbar dashboard-navbar" aria-label="Main navigation"></nav>
+
+      <section class="case-detail-shell ArgoGlass-Base" aria-label="Case detail card">
+        <header class="case-detail-top">
+          <div class="case-detail-meta">
+            <div class="case-detail-meta-row">
+              <span class="case-detail-label" id="caseDetailClaimId">CLAIM-128390</span>
+            </div>
+            <div class="case-detail-meta-row">
+              <span class="case-detail-label" id="caseDetailTimestamp">2026-01-05 10:41:12</span>
+            </div>
+            <div class="case-detail-summary" id="caseDetailSummary"></div>
+          </div>
+
+          <div class="case-detail-kpis">
+            <article class="case-kpi-col">
+              <h3 class="case-kpi-label">Pre-review</h3>
+              <div class="case-kpi-orb is-warning" id="caseDetailPreTone">
+                <span class="case-kpi-value" id="caseDetailPreScore">68%</span>
+              </div>
+              <p class="case-kpi-note">confidence score</p>
+            </article>
+            <article class="case-kpi-col">
+              <h3 class="case-kpi-label">Post-review</h3>
+              <div class="case-kpi-orb is-good" id="caseDetailPostTone">
+                <span class="case-kpi-value" id="caseDetailPostScore">99%</span>
+              </div>
+              <p class="case-kpi-note">confidence score</p>
+            </article>
+          </div>
+        </header>
+
+        <section class="case-detail-table-wrap" aria-label="Case event timeline">
+          <div class="case-detail-table" id="caseDetailRows"></div>
+        </section>
+
+        <footer class="case-detail-footer">
+          <button class="workflow-cta case-back-btn" id="caseBackOperator" type="button">Back to operator logs</button>
+          <div class="case-detail-footer-actions">
+            <button class="workflow-cta" id="caseContactInfo" type="button">Contact information</button>
+            <button class="workflow-cta processing-card-primary-btn" id="caseRequestClarification" type="button">Requested clarification</button>
+          </div>
+        </footer>
+      </section>
+
+      <aside class="presenter-panel" id="presenterPanel" aria-label="Presenter panel" aria-hidden="true">
+        <div class="presenter-panel-head">
+          <strong>Presenter mode</strong>
+          <button class="presenter-close" type="button" id="presenterClose">Close</button>
+        </div>
+
+        <label class="presenter-field">
+          <span>Theme</span>
+          <select id="presenterTheme">
+            <option value="healthcare">Healthcare</option>
+            <option value="smb">SMB Ops</option>
+            <option value="future">Autonomous Ops</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Scenario</span>
+          <select id="presenterScenario">
+            <option value="mixed">Mixed queue</option>
+            <option value="auto">AI-first</option>
+            <option value="flagged">Flagged surge</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Speed</span>
+          <select id="presenterSpeed">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+          </select>
+        </label>
+
+        <div class="presenter-actions">
+          <button class="presenter-btn" id="presenterReset" type="button">Reset run</button>
+          <button class="presenter-btn" id="presenterFreeze" type="button">Freeze motion</button>
+          <button class="presenter-btn" id="presenterShare" type="button">Copy shareable link</button>
+        </div>
+      </aside>
+
+      <div class="floating-chat" aria-label="Floating assistant chat">
+        <div class="floating-chat-logo ArgoGlass-Base" aria-label="Argo assistant target">
+          <img src="./Assets/A-logo.svg" alt="" aria-hidden="true" class="floating-chat-logo-icon" />
+        </div>
+
+        <div class="floating-chat-compose">
+          <label class="sr-only" for="caseChatInput">Ask Argo IQ anything</label>
+          <input id="caseChatInput" class="floating-chat-input is-scripted" type="text" placeholder="Ask Argo IQ anything" autocomplete="off" readonly />
+          <button class="floating-chat-send" type="button" aria-label="Send message">
+            <img src="./Assets/Send.svg" alt="" aria-hidden="true" class="floating-chat-send-icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="universal-status-line" aria-label="Universal system status">
+        <span class="universal-status-label">System status:</span>
+        <span class="status-dot-wrap" aria-hidden="true">
+          <span class="status-dot is-auto universal-status-dot"></span>
+        </span>
+        <span class="universal-status-value">Stable</span>
+      </div>
+    </main>
+
+    <script type="module" src="./case-detail.js"></script>
+  </body>
+</html>

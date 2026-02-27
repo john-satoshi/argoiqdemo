@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArgoIQ Demoware SMBs - Feeds</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <filter id="frosted-rect" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence id="frosted-rect-noise" type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="5" result="noise" />
+        <feGaussianBlur id="frosted-rect-gauss" in="SourceGraphic" stdDeviation="2.25" result="blurred" />
+        <feDisplacementMap id="frosted-rect-displace" in="blurred" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <main class="demo-bg dashboard-screen" aria-label="Feeds screen">
+      <video
+        class="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src="https://d1jlu00ptx05u6.cloudfront.net/feed+background+opt.mp4" type="video/mp4" />
+      </video>
+
+      <nav id="appNavbarMount" class="app-navbar dashboard-navbar" aria-label="Main navigation"></nav>
+
+      <section class="feed-center-row is-single-card" id="feedCenterRow" aria-label="Feed cards row">
+      <article class="feed-live-card ArgoGlass-Base" aria-label="Live feed component">
+        <header class="feed-live-card-header">
+          <div class="feed-live-title-row">
+            <span class="status-dot is-auto" aria-hidden="true"></span>
+            <h2 class="feed-live-title" id="feedLiveTitle">Claims Processing</h2>
+          </div>
+          <div class="feed-live-header-badges">
+            <span class="workflow-pill" id="feedLiveBadgeA">Healthcare</span>
+            <span class="workflow-pill" id="feedLiveBadgeB">HIPAA-safe</span>
+          </div>
+        </header>
+
+        <section class="feed-live-kpi-strip" aria-label="Feed overview KPIs">
+          <article class="feed-kpi-col">
+            <h3 class="feed-kpi-label">Accuracy</h3>
+            <div class="feed-kpi-orb feed-kpi-orb--green">
+              <span class="feed-kpi-value" id="feedKpiAccuracy">98.6%</span>
+            </div>
+            <div class="feed-kpi-meta">
+              <span class="feed-kpi-badge" id="feedKpiAccuracyDelta">+0.4%</span>
+              <span class="feed-kpi-note">vs last hour</span>
+            </div>
+          </article>
+
+          <article class="feed-kpi-col feed-kpi-col--wide">
+            <h3 class="feed-kpi-label">Avg cycle</h3>
+            <div class="feed-kpi-orb">
+              <span class="feed-kpi-value" id="feedKpiCycle">1:42</span>
+            </div>
+            <div class="feed-kpi-meta">
+              <span class="feed-kpi-badge" id="feedKpiCycleDelta">18s</span>
+              <span class="feed-kpi-note">above baseline</span>
+            </div>
+          </article>
+
+          <article class="feed-kpi-col">
+            <h3 class="feed-kpi-label">Cost saved</h3>
+            <div class="feed-kpi-orb">
+              <span class="feed-kpi-value" id="feedKpiCost">$14,320</span>
+            </div>
+            <div class="feed-kpi-meta">
+              <span class="feed-kpi-badge" id="feedKpiCases24h">286</span>
+              <span class="feed-kpi-note">cases in 24h</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="feed-live-info" aria-label="Feed overview info">
+          <p class="workflow-description" id="feedWorkflowDescription">Ingests, validates, and resolves claims with AI and on-demand human review.</p>
+
+          <div class="workflow-metric-row">
+            <span class="workflow-metric-label" id="feedLabelActive">Active cases:</span>
+            <span class="workflow-pill workflow-pill-light" id="feedMetricActive">27</span>
+          </div>
+          <div class="workflow-metric-row">
+            <span class="workflow-metric-label" id="feedLabelCompleted">Completed (today):</span>
+            <span class="workflow-pill workflow-pill-light" id="feedMetricCompleted">143</span>
+          </div>
+          <div class="workflow-metric-row">
+            <span class="workflow-metric-label" id="feedLabelEta">Next review ETA:</span>
+            <span class="workflow-pill workflow-pill-light" id="feedMetricEta">1m</span>
+          </div>
+          <div class="workflow-metric-row workflow-ops-row">
+            <span class="workflow-metric-label" id="feedLabelOperators">Operators available:</span>
+            <div class="workflow-ops-group">
+              <div class="workflow-avatars" id="feedOperatorAvatars" aria-hidden="true">
+                <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002674.jpg')"></span>
+                <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002696.jpg')"></span>
+                <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002701.jpg')"></span>
+                <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002704.jpg')"></span>
+                <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002710.jpg')"></span>
+                <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002705.jpg')"></span>
+              </div>
+              <span class="workflow-pill workflow-pill-light" id="feedMetricOperators">6</span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="feed-live-actions">
+          <button class="workflow-cta" type="button" id="feedToggleLiveActivity">View live activity</button>
+          <button class="workflow-cta feed-live-actions-primary" type="button" id="feedViewAllLogs">View all logs</button>
+        </footer>
+
+        <div class="feed-workflow-animation" id="feedWorkflowAnimation" aria-hidden="true"></div>
+      </article>
+
+      <article
+        id="feedProcessingCard"
+        class="processing-card feed-processing-card ArgoGlass-S"
+        aria-label="Feed processing card"
+        data-workflow-type="claims_processing"
+        data-phase-sequence="ingestion,input_normalization,context_enrichment_validation,evaluation_pass,completion"
+      >
+        <div class="processing-card-sandwich">
+          <header class="processing-card-top">
+            <div class="processing-card-title-row">
+              <span class="status-dot is-auto" aria-hidden="true"></span>
+              <h2 class="processing-card-title">CLM-04821</h2>
+            </div>
+            <div class="processing-card-header-badges">
+              <span class="workflow-pill" id="processingEntityBadge">Claim</span>
+              <span class="workflow-pill" id="processing-card-timer">00:08</span>
+            </div>
+          </header>
+
+          <section class="processing-card-middle">
+            <p class="processing-card-phase-label" id="processing-phase-label">Ingestion phase</p>
+            <div
+              class="processing-progress"
+              role="progressbar"
+              aria-label="Ingestion progress"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              id="processing-progress"
+            >
+              <span class="processing-progress-track" id="processing-progress-track"></span>
+            </div>
+            <div class="processing-task-list" id="processing-task-list" aria-live="polite"></div>
+            <div class="processing-visual-panel" id="processing-visual-panel" aria-live="polite" hidden>
+              <div class="processing-task-list" id="processing-visual-rows"></div>
+              <div class="processing-sources-line" id="processing-sources-line" hidden>
+                <span class="processing-card-live-text" id="processing-sources-label">3 sources available</span>
+              </div>
+              <div class="processing-doc-scan" id="processing-doc-scan">
+                <div class="processing-doc-preview">
+                  <div class="processing-doc-laser"></div>
+                  <div class="processing-doc-label" id="processing-doc-label">Doc1</div>
+                </div>
+                <div class="processing-doc-meta" id="processing-doc-meta">CLM-04821\nInput normalization\nSTATUS: SCANNING</div>
+              </div>
+              <div class="processing-crossref" id="processing-crossref" hidden>
+                <div class="processing-crossref-stack" id="processing-crossref-stack" data-stage="0">
+                  <div class="processing-crossref-doc is-back-left">
+                    <span class="processing-crossref-doc-label" id="processing-crossref-doc-left">Doc1</span>
+                  </div>
+                  <div class="processing-crossref-doc is-back-right">
+                    <span class="processing-crossref-doc-label" id="processing-crossref-doc-right">Doc2</span>
+                  </div>
+                  <div class="processing-crossref-doc is-front">
+                    <span class="processing-crossref-doc-label" id="processing-crossref-doc-front">Doc3</span>
+                  </div>
+                </div>
+                <div class="processing-card-live-row">
+                  <span class="processing-card-live-text" id="processing-crossref-meta-text">Cross-referencing cases</span>
+                  <span class="loading-dots" aria-label="loading" role="status"></span>
+                </div>
+              </div>
+              <div class="processing-confidence-panel" id="processing-confidence-panel" hidden>
+                <div class="processing-confidence-orb" id="processing-confidence-orb">
+                  <div class="processing-confidence-value" id="processing-confidence-value">--%</div>
+                </div>
+                <div class="processing-confidence-label">Confidence score</div>
+              </div>
+              <div class="processing-completion-panel" id="processing-completion-panel" hidden>
+                <div class="processing-completion-icon-wrap">
+                  <span class="processing-completion-check" aria-hidden="true"></span>
+                </div>
+                <div class="processing-completion-text" id="processing-completion-text">Claim processed successfully</div>
+              </div>
+              <div class="processing-operator-panel" id="processing-operator-panel" hidden>
+                <div class="processing-operator-radar" id="processing-operator-radar" aria-hidden="true">
+                  <div class="processing-operator-radar-arc arc-sm"></div>
+                  <div class="processing-operator-radar-arc arc-md"></div>
+                  <div class="processing-operator-radar-arc arc-lg"></div>
+                  <div class="processing-operator-core ArgoGlass-M" aria-hidden="true">
+                    <img src="./Assets/A-logo.svg" alt="" />
+                  </div>
+                  <div class="processing-operator-avatar a1" style="background-image:url('./Assets:ProfilePicture/Frame 1000002696.jpg')"></div>
+                  <div class="processing-operator-avatar a2" style="background-image:url('./Assets:ProfilePicture/Frame 1000002698.jpg')"></div>
+                  <div class="processing-operator-avatar a3" style="background-image:url('./Assets:ProfilePicture/Frame 1000002699.jpg')"></div>
+                  <div class="processing-operator-avatar a4" style="background-image:url('./Assets:ProfilePicture/Frame 1000002702.jpg')"></div>
+                  <div class="processing-operator-avatar a5" style="background-image:url('./Assets:ProfilePicture/Frame 1000002704.jpg')"></div>
+                  <div class="processing-operator-avatar a6" style="background-image:url('./Assets:ProfilePicture/Frame 1000002707.jpg')"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="processing-card-bottom">
+            <button class="workflow-cta" type="button" id="processingCloseLiveActivity">Close</button>
+            <button class="workflow-cta processing-card-primary-btn" type="button" id="processingViewLog">View Log</button>
+          </footer>
+        </div>
+      </article>
+      </section>
+
+      <aside class="presenter-panel" id="presenterPanel" aria-label="Presenter panel" aria-hidden="true">
+        <div class="presenter-panel-head">
+          <strong>Presenter Panel</strong>
+          <button class="presenter-close" type="button" id="presenterClose">Close</button>
+        </div>
+
+        <label class="presenter-field">
+          <span>Theme</span>
+          <select id="presenterTheme">
+            <option value="healthcare">Healthcare</option>
+            <option value="smb">SMB Ops</option>
+            <option value="future">Autonomous Ops</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Scenario</span>
+          <select id="presenterScenario">
+            <option value="auto">Auto-pass</option>
+            <option value="flagged">Flagged</option>
+            <option value="mixed">Mixed</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Speed</span>
+          <select id="presenterSpeed">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+
+        <div class="presenter-actions">
+          <button class="presenter-btn" id="presenterReset" type="button">Reset run</button>
+          <button class="presenter-btn" id="presenterFreeze" type="button">Freeze motion</button>
+          <button class="presenter-btn" id="presenterShare" type="button">Copy shareable link</button>
+        </div>
+      </aside>
+
+      <div class="floating-chat" aria-label="Floating assistant chat">
+        <div class="floating-chat-logo ArgoGlass-Base" aria-label="Argo assistant target">
+          <img src="./Assets/A-logo.svg" alt="" aria-hidden="true" class="floating-chat-logo-icon" />
+        </div>
+
+        <div class="floating-chat-compose">
+          <label class="sr-only" for="feedsChatInput">Ask Argo IQ anything</label>
+          <input
+            id="feedsChatInput"
+            class="floating-chat-input is-scripted"
+            type="text"
+            placeholder="Ask Argo IQ anything"
+            autocomplete="off"
+            readonly
+          />
+          <button class="floating-chat-send" type="button" aria-label="Send message">
+            <img src="./Assets/Send.svg" alt="" aria-hidden="true" class="floating-chat-send-icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="universal-status-line" aria-label="Universal system status">
+        <span class="universal-status-label">System status:</span>
+        <span class="status-dot-wrap" aria-hidden="true">
+          <span class="status-dot is-auto universal-status-dot"></span>
+        </span>
+        <span class="universal-status-value">Stable</span>
+      </div>
+
+    </main>
+    <script type="module" src="./feeds.js"></script>
+  </body>
+</html>

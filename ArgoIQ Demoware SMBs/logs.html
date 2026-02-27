@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArgoIQ Demoware SMBs - Logs</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <filter id="frosted-rect" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence id="frosted-rect-noise" type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="5" result="noise" />
+        <feGaussianBlur id="frosted-rect-gauss" in="SourceGraphic" stdDeviation="2.25" result="blurred" />
+        <feDisplacementMap id="frosted-rect-displace" in="blurred" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <main class="demo-bg dashboard-screen logs-screen" aria-label="Workflow logs screen">
+      <video class="bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="https://d1jlu00ptx05u6.cloudfront.net/feed+background+opt.mp4" type="video/mp4" />
+      </video>
+
+      <nav id="appNavbarMount" class="app-navbar dashboard-navbar" aria-label="Main navigation"></nav>
+
+      <section class="logs-shell ArgoGlass-Base" aria-label="Workflow logs panel">
+        <header class="logs-top">
+          <div class="logs-top-left">
+            <div class="logs-title-row">
+              <span class="status-dot is-auto" aria-hidden="true"></span>
+              <h2 class="logs-title" id="logsWorkflowTitle">Scheduling &amp; Back-Office Ops</h2>
+              <span class="workflow-pill" id="logsWorkflowTag">Ops</span>
+            </div>
+            <p class="logs-description" id="logsWorkflowDescription">
+              Ingests scheduling, billing, verification, and onboarding tasks with AI &amp; human QA to keep back-office workflows moving cleanly.
+            </p>
+            <div class="logs-tabs" role="tablist" aria-label="Log view filters">
+              <button class="logs-tab is-active" id="logsTabAll" type="button" role="tab" aria-selected="true">All logs</button>
+              <button class="logs-tab" id="logsTabFlagged" type="button" role="tab" aria-selected="false">Flagged cases</button>
+            </div>
+          </div>
+
+          <div class="logs-top-middle">
+            <div class="workflow-metric-row">
+              <span class="workflow-metric-label" id="logsLabelActive">Active cases:</span>
+              <span class="workflow-pill workflow-pill-light" id="logsMetricActive">27</span>
+            </div>
+            <div class="workflow-metric-row">
+              <span class="workflow-metric-label" id="logsLabelCompleted">Completed (today):</span>
+              <span class="workflow-pill workflow-pill-light" id="logsMetricCompleted">143</span>
+            </div>
+            <div class="workflow-metric-row">
+              <span class="workflow-metric-label" id="logsLabelEta">Next review ETA:</span>
+              <span class="workflow-pill workflow-pill-light" id="logsMetricEta">1m</span>
+            </div>
+            <div class="workflow-metric-row workflow-ops-row">
+              <span class="workflow-metric-label" id="logsLabelOperators">Operators available:</span>
+              <div class="workflow-ops-group">
+                <div class="workflow-avatars" id="logsOperatorAvatars" aria-hidden="true">
+                  <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002674.jpg')"></span>
+                  <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002696.jpg')"></span>
+                  <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002701.jpg')"></span>
+                  <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002704.jpg')"></span>
+                  <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002710.jpg')"></span>
+                  <span class="workflow-avatar" style="background-image:url('./Assets:ProfilePicture/Frame%201000002705.jpg')"></span>
+                </div>
+                <span class="workflow-pill workflow-pill-light" id="logsMetricOperators">6</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="logs-top-right feed-live-kpi-strip" aria-label="Workflow performance metrics">
+            <article class="feed-kpi-col">
+              <h3 class="feed-kpi-label">Accuracy</h3>
+              <div class="feed-kpi-orb feed-kpi-orb--green">
+                <span class="feed-kpi-value" id="logsKpiAccuracy">98.6%</span>
+              </div>
+              <div class="feed-kpi-meta">
+                <span class="feed-kpi-badge" id="logsKpiAccuracyDelta">+0.4%</span>
+                <span class="feed-kpi-note">vs last hour</span>
+              </div>
+            </article>
+
+            <article class="feed-kpi-col feed-kpi-col--wide">
+              <h3 class="feed-kpi-label">Avg cycle</h3>
+              <div class="feed-kpi-orb">
+                <span class="feed-kpi-value" id="logsKpiCycle">1:42</span>
+              </div>
+              <div class="feed-kpi-meta">
+                <span class="feed-kpi-badge" id="logsKpiCycleDelta">18s</span>
+                <span class="feed-kpi-note">above baseline</span>
+              </div>
+            </article>
+
+            <article class="feed-kpi-col">
+              <h3 class="feed-kpi-label">Cost saved</h3>
+              <div class="feed-kpi-orb">
+                <span class="feed-kpi-value" id="logsKpiCost">$14,320</span>
+              </div>
+              <div class="feed-kpi-meta">
+                <span class="feed-kpi-badge" id="logsKpiCases24h">286</span>
+                <span class="feed-kpi-note">cases in 24h</span>
+              </div>
+            </article>
+          </div>
+        </header>
+
+        <section class="logs-table-wrap">
+          <div class="logs-table" id="logsTableRows"></div>
+        </section>
+
+        <footer class="logs-pagination" aria-label="Logs pagination">
+          <button class="logs-page-nav is-muted" type="button">&#8249; Previous</button>
+          <button class="logs-page-number is-active" type="button">1</button>
+          <button class="logs-page-number" type="button">2</button>
+          <button class="logs-page-number" type="button">3</button>
+          <button class="logs-page-dots" type="button">&#8230;</button>
+          <button class="logs-page-nav" type="button">Next &#8250;</button>
+        </footer>
+      </section>
+
+      <aside class="presenter-panel" id="presenterPanel" aria-label="Presenter panel" aria-hidden="true">
+        <div class="presenter-panel-head">
+          <strong>Presenter Panel</strong>
+          <button class="presenter-close" type="button" id="presenterClose">Close</button>
+        </div>
+
+        <label class="presenter-field">
+          <span>Theme</span>
+          <select id="presenterTheme">
+            <option value="healthcare">Healthcare</option>
+            <option value="smb">SMB Ops</option>
+            <option value="future">Autonomous Ops</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Scenario</span>
+          <select id="presenterScenario">
+            <option value="auto">Auto-pass</option>
+            <option value="flagged">Flagged</option>
+            <option value="mixed">Mixed</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Speed</span>
+          <select id="presenterSpeed">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+
+        <div class="presenter-actions">
+          <button class="presenter-btn" id="presenterReset" type="button">Reset run</button>
+          <button class="presenter-btn" id="presenterFreeze" type="button">Freeze motion</button>
+          <button class="presenter-btn" id="presenterShare" type="button">Copy shareable link</button>
+        </div>
+      </aside>
+
+      <div class="floating-chat" aria-label="Floating assistant chat">
+        <div class="floating-chat-logo ArgoGlass-Base" aria-label="Argo assistant target">
+          <img src="./Assets/A-logo.svg" alt="" aria-hidden="true" class="floating-chat-logo-icon" />
+        </div>
+
+        <div class="floating-chat-compose">
+          <label class="sr-only" for="logsChatInput">Ask Argo IQ anything</label>
+          <input id="logsChatInput" class="floating-chat-input is-scripted" type="text" placeholder="Ask Argo IQ anything" autocomplete="off" readonly />
+          <button class="floating-chat-send" type="button" aria-label="Send message">
+            <img src="./Assets/Send.svg" alt="" aria-hidden="true" class="floating-chat-send-icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="universal-status-line" aria-label="Universal system status">
+        <span class="universal-status-label">System status:</span>
+        <span class="status-dot-wrap" aria-hidden="true">
+          <span class="status-dot is-auto universal-status-dot"></span>
+        </span>
+        <span class="universal-status-value">Stable</span>
+      </div>
+    </main>
+    <script type="module" src="./logs.js"></script>
+  </body>
+</html>

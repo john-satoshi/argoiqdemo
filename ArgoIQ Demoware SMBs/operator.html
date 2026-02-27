@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArgoIQ Demoware SMBs - Operator</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <filter id="frosted-rect" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence id="frosted-rect-noise" type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="5" result="noise" />
+        <feGaussianBlur id="frosted-rect-gauss" in="SourceGraphic" stdDeviation="2.25" result="blurred" />
+        <feDisplacementMap id="frosted-rect-displace" in="blurred" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <main class="demo-bg dashboard-screen operator-screen" aria-label="Operator screen">
+      <video class="bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="https://d1jlu00ptx05u6.cloudfront.net/human+backgorund+opt.mp4" type="video/mp4" />
+      </video>
+
+      <nav id="appNavbarMount" class="app-navbar dashboard-navbar" aria-label="Main navigation"></nav>
+
+      <section class="operator-center-row is-single-card" id="operatorCenterRow" aria-label="Operator workspace">
+        <article class="operator-detail-card ArgoGlass-M" aria-label="Operator details card">
+          <header class="operator-detail-header">
+            <div class="operator-detail-avatar" id="operatorAvatar" aria-hidden="true"></div>
+            <div class="operator-detail-title-row">
+              <div class="operator-detail-name-wrap">
+                <span class="status-dot is-auto" aria-hidden="true"></span>
+                <h2 class="operator-detail-name" id="operatorName">Sarah Jones</h2>
+              </div>
+              <span class="workflow-pill" id="operatorRoleBadge">Claims QA Operator</span>
+            </div>
+          </header>
+
+          <section class="operator-detail-block">
+            <p class="operator-detail-label">Specialization</p>
+            <p class="operator-detail-value" id="operatorSpecialization">Healthcare claims · High-risk review</p>
+          </section>
+
+          <section class="operator-detail-block">
+            <p class="operator-detail-label">Status:</p>
+            <div class="operator-detail-status-row">
+              <span class="operator-detail-value operator-detail-status-text">
+                <span id="operatorStatusText">In review · CLAIM-128390</span><span class="loading-dots" id="operatorStatusDots" aria-label="loading" role="status"></span>
+              </span>
+              <span class="logs-runtime-pill" id="operatorStatusTimer">00:03</span>
+            </div>
+          </section>
+
+          <footer class="operator-detail-footer">
+            <div class="operator-detail-footer-row">
+              <button class="workflow-cta" id="operatorToggleLogs" type="button">View operator log</button>
+              <button class="workflow-cta processing-card-primary-btn" id="operatorContactInfo" type="button">Contact information</button>
+            </div>
+          </footer>
+        </article>
+
+        <section class="operator-logs-shell ArgoGlass-Base" id="operatorLogsShell" aria-label="Operator assigned logs">
+          <header class="operator-logs-top">
+            <div class="operator-logs-metrics">
+              <div class="workflow-metric-row">
+                <span class="workflow-metric-label">Active cases:</span>
+                <span class="workflow-pill workflow-pill-light" id="operatorMetricActive">3</span>
+              </div>
+              <div class="workflow-metric-row">
+                <span class="workflow-metric-label">Completed (today):</span>
+                <span class="workflow-pill workflow-pill-light" id="operatorMetricCompleted">18</span>
+              </div>
+              <div class="workflow-metric-row">
+                <span class="workflow-metric-label">Workflow assigned:</span>
+              </div>
+              <p class="operator-logs-workflow" id="operatorWorkflowLabel">Healthcare claims · High-risk review</p>
+            </div>
+
+            <div class="operator-logs-kpis">
+              <article class="feed-kpi-col">
+                <h3 class="feed-kpi-label">Accuracy</h3>
+                <div class="feed-kpi-orb feed-kpi-orb--green">
+                  <span class="feed-kpi-value" id="operatorKpiAccuracy">99.2%</span>
+                </div>
+                <div class="feed-kpi-meta">
+                  <span class="feed-kpi-badge" id="operatorKpiAccuracyDelta">+0.4%</span>
+                  <span class="feed-kpi-note">last 7d</span>
+                </div>
+              </article>
+
+              <article class="feed-kpi-col feed-kpi-col--wide">
+                <h3 class="feed-kpi-label">Avg time</h3>
+                <div class="feed-kpi-orb">
+                  <span class="feed-kpi-value" id="operatorKpiCycle">14m</span>
+                </div>
+                <div class="feed-kpi-meta">
+                  <span class="feed-kpi-badge" id="operatorKpiCasesToday">18</span>
+                  <span class="feed-kpi-note">cases today</span>
+                </div>
+              </article>
+            </div>
+          </header>
+
+          <section class="operator-logs-table-wrap">
+            <div class="operator-logs-table" id="operatorLogsTableRows"></div>
+          </section>
+
+          <footer class="logs-pagination" aria-label="Operator logs pagination">
+            <button class="logs-page-nav is-muted" type="button">&#8249; Previous</button>
+            <button class="logs-page-number is-active" type="button">1</button>
+            <button class="logs-page-number" type="button">2</button>
+            <button class="logs-page-number" type="button">3</button>
+            <button class="logs-page-dots" type="button">&#8230;</button>
+            <button class="logs-page-nav" type="button">Next &#8250;</button>
+          </footer>
+        </section>
+      </section>
+
+      <aside class="presenter-panel" id="presenterPanel" aria-label="Presenter panel" aria-hidden="true">
+        <div class="presenter-panel-head">
+          <strong>Presenter mode</strong>
+          <button class="presenter-close" type="button" id="presenterClose">Close</button>
+        </div>
+
+        <label class="presenter-field">
+          <span>Theme</span>
+          <select id="presenterTheme">
+            <option value="healthcare">Healthcare</option>
+            <option value="smb">SMB Ops</option>
+            <option value="future">Autonomous Ops</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Scenario</span>
+          <select id="presenterScenario">
+            <option value="mixed">Mixed queue</option>
+            <option value="auto">AI-first</option>
+            <option value="flagged">Flagged surge</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Speed</span>
+          <select id="presenterSpeed">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+          </select>
+        </label>
+
+        <div class="presenter-actions">
+          <button class="presenter-btn" id="presenterReset" type="button">Reset run</button>
+          <button class="presenter-btn" id="presenterFreeze" type="button">Freeze motion</button>
+          <button class="presenter-btn" id="presenterShare" type="button">Copy shareable link</button>
+        </div>
+      </aside>
+
+      <div class="floating-chat" aria-label="Floating assistant chat">
+        <div class="floating-chat-logo ArgoGlass-Base" aria-label="Argo assistant target">
+          <img src="./Assets/A-logo.svg" alt="" aria-hidden="true" class="floating-chat-logo-icon" />
+        </div>
+
+        <div class="floating-chat-compose">
+          <label class="sr-only" for="operatorChatInput">Ask Argo IQ anything</label>
+          <input id="operatorChatInput" class="floating-chat-input is-scripted" type="text" placeholder="Ask Argo IQ anything" autocomplete="off" readonly />
+          <button class="floating-chat-send" type="button" aria-label="Send message">
+            <img src="./Assets/Send.svg" alt="" aria-hidden="true" class="floating-chat-send-icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="universal-status-line" aria-label="Universal system status">
+        <span class="universal-status-label">System status:</span>
+        <span class="status-dot-wrap" aria-hidden="true">
+          <span class="status-dot is-auto universal-status-dot"></span>
+        </span>
+        <span class="universal-status-value">Stable</span>
+      </div>
+    </main>
+
+    <script type="module" src="./operator.js"></script>
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArgoIQ Demoware SMBs - Insight</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+      <filter id="frosted-rect" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence id="frosted-rect-noise" type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="5" result="noise" />
+        <feGaussianBlur id="frosted-rect-gauss" in="SourceGraphic" stdDeviation="2.25" result="blurred" />
+        <feDisplacementMap id="frosted-rect-displace" in="blurred" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </svg>
+
+    <main class="demo-bg dashboard-screen insight-screen" aria-label="Insight screen">
+      <video class="bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="https://d1jlu00ptx05u6.cloudfront.net/insight+background+opt.mp4" type="video/mp4" />
+      </video>
+
+      <nav id="appNavbarMount" class="app-navbar dashboard-navbar" aria-label="Main navigation"></nav>
+
+      <section class="insight-component" aria-label="Insights workspace">
+        <div class="insight-filter-row">
+          <div class="insight-tabs" id="insightWorkflowTabs" role="tablist" aria-label="Workflow filters"></div>
+          <div class="insight-tabs insight-tabs--time" id="insightTimeTabs" role="tablist" aria-label="Time filters"></div>
+        </div>
+
+        <div class="insight-main">
+          <aside class="insight-side-card ArgoGlass-S" aria-label="Insight KPI rail">
+            <article class="insight-side-item">
+              <h3 class="insight-side-label">Accuracy</h3>
+              <div class="insight-side-orb insight-side-orb--green feed-kpi-orb feed-kpi-orb--green"><span class="feed-kpi-value" id="insightMetricAccuracy">98.6%</span></div>
+              <span class="feed-kpi-badge" id="insightMetricAccuracyDelta">+0.4%</span>
+              <p class="insight-side-note" id="insightMetricAccuracyNote">vs last hour</p>
+            </article>
+            <article class="insight-side-item">
+              <h3 class="insight-side-label">Avg cycle</h3>
+              <div class="insight-side-orb feed-kpi-orb"><span class="feed-kpi-value" id="insightMetricCycle">1:42</span></div>
+              <span class="feed-kpi-badge" id="insightMetricCycleDelta">-18s</span>
+              <p class="insight-side-note" id="insightMetricCycleNote">vs baseline</p>
+            </article>
+            <article class="insight-side-item">
+              <h3 class="insight-side-label">Completed</h3>
+              <div class="insight-side-orb feed-kpi-orb"><span class="feed-kpi-value" id="insightMetricCompleted">183</span></div>
+              <span class="feed-kpi-badge" id="insightMetricCompletedDelta">+12%</span>
+              <p class="insight-side-note" id="insightMetricCompletedNote">vs same time ytd</p>
+            </article>
+            <article class="insight-side-item">
+              <h3 class="insight-side-label">Operators</h3>
+              <div class="insight-side-orb feed-kpi-orb"><span class="feed-kpi-value" id="insightMetricOperators">18%</span></div>
+              <span class="feed-kpi-badge" id="insightMetricOperatorsDelta">-3%</span>
+              <p class="insight-side-note" id="insightMetricOperatorsNote">vs ytd</p>
+            </article>
+            <article class="insight-side-item">
+              <h3 class="insight-side-label">Cost saved</h3>
+              <div class="insight-side-orb feed-kpi-orb"><span class="feed-kpi-value" id="insightMetricCost">$147k</span></div>
+              <span class="feed-kpi-badge" id="insightMetricCostDelta">+$12k</span>
+              <p class="insight-side-note" id="insightMetricCostNote">vs same time ytd</p>
+            </article>
+          </aside>
+
+          <div class="insight-content">
+            <article class="insight-finance-card ArgoGlass-Base" aria-label="Cost and efficiency insights">
+              <section class="insight-finance-summary" id="insightFinanceSummary"></section>
+
+              <section class="insight-finance-chart">
+                <h3 class="insight-chart-title">Cost Saved Over Time (Cumulative)</h3>
+                <svg id="insightCostChart" viewBox="0 0 520 220" aria-label="Cost saved cumulative chart"></svg>
+                <div class="insight-chart-legend"><span class="legend-dot is-green"></span><span>Cost saved ($)</span></div>
+              </section>
+
+              <section class="insight-finance-breakdowns">
+                <div class="insight-breakdown-group">
+                  <h3 class="insight-chart-title">Cost saved by workflow</h3>
+                  <div id="insightWorkflowBreakdown"></div>
+                </div>
+                <div class="insight-breakdown-group">
+                  <h3 class="insight-chart-title">Cost breakdown by resolution source</h3>
+                  <div id="insightSourceBreakdown"></div>
+                </div>
+              </section>
+            </article>
+
+            <div class="insight-bottom-grid">
+              <article class="insight-trend-card ArgoGlass-Base" aria-label="Execution volume trend">
+                <div class="insight-select-wrap">
+                  <button class="insight-select insight-select-trigger" id="insightTrendSelectTrigger" type="button" aria-expanded="false">
+                    <span id="insightTrendSelectLabel">Execution Volume Trend</span>
+                    <svg class="insight-select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M4 6L8 10L12 6" stroke="#404040" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="insight-select-menu" id="insightTrendSelectMenu" hidden>
+                    <div class="insight-select-menu-group">
+                      <button class="insight-select-item is-active" data-trend-view="execution" type="button">
+                        <span class="insight-select-item-label">Execution Volume Trend</span>
+                        <svg class="insight-select-item-check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path d="M3 8.5L6.2 11.5L13 4.8" stroke="#0A0A0A" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                      <button class="insight-select-item" data-trend-view="accuracy" type="button">
+                        <span class="insight-select-item-label">Accuracy Over Time</span>
+                        <svg class="insight-select-item-check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path d="M3 8.5L6.2 11.5L13 4.8" stroke="#0A0A0A" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                      <button class="insight-select-item" data-trend-view="distribution" type="button">
+                        <span class="insight-select-item-label">Cycle Time Distribution</span>
+                        <svg class="insight-select-item-check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path d="M3 8.5L6.2 11.5L13 4.8" stroke="#0A0A0A" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                      <button class="insight-select-item" data-trend-view="efficiency" type="button">
+                        <span class="insight-select-item-label">Human Efficiency</span>
+                        <svg class="insight-select-item-check" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path d="M3 8.5L6.2 11.5L13 4.8" stroke="#0A0A0A" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="insight-trend-head">
+                  <div>
+                    <p class="insight-trend-label" id="insightPrimaryMetricLabel">Cases per hour</p>
+                    <p class="insight-trend-value" id="insightCasesPerHour">32</p>
+                  </div>
+                  <div>
+                    <p class="insight-trend-label" id="insightSecondaryMetricLabel">Average cycle count</p>
+                    <p class="insight-trend-value" id="insightCycleCount">1m 42s</p>
+                  </div>
+                </div>
+                <svg id="insightExecutionChart" viewBox="0 0 520 220" aria-label="Execution trend chart"></svg>
+                <div class="insight-chart-legend insight-chart-legend--dual" id="insightTrendLegend">
+                  <span><i class="legend-dot is-magenta"></i>Cases</span>
+                  <span><i class="legend-dot is-blue"></i>Flagged</span>
+                </div>
+              </article>
+
+              <article class="insight-resolution-card ArgoGlass-Base" aria-label="Resolution breakdown">
+                <div class="insight-select">Resolution Breakdown
+                  <svg class="insight-select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M4 6L8 10L12 6" stroke="#404040" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="insight-resolution-body">
+                  <div class="insight-resolution-list" id="insightResolutionList"></div>
+                  <div class="insight-donut-wrap">
+                    <svg id="insightDonutChart" viewBox="0 0 220 220" aria-label="Resolution donut chart"></svg>
+                  </div>
+                </div>
+                <div class="insight-chart-legend insight-chart-legend--triple" id="insightResolutionLegend"></div>
+              </article>
+            </div>
+
+            <div class="insight-chat-row" id="insightChatRow" aria-label="Insight chat row">
+              <div class="insight-chat-flow" id="insightChatFlow">
+                <div class="chat-transcript insight-chat-transcript" id="insightChatTranscript" aria-live="polite"></div>
+                <div class="floating-chat" aria-label="Floating assistant chat">
+                  <div class="floating-chat-logo ArgoGlass-Base" aria-label="Argo assistant target">
+                    <img src="./Assets/A-logo.svg" alt="" aria-hidden="true" class="floating-chat-logo-icon" />
+                  </div>
+
+                  <div class="floating-chat-compose">
+                    <label class="sr-only" for="insightChatInput">Ask Argo IQ anything</label>
+                    <input id="insightChatInput" class="floating-chat-input is-scripted" type="text" placeholder="Ask Argo IQ anything" autocomplete="off" readonly />
+                    <button class="floating-chat-send" type="button" aria-label="Send message">
+                      <img src="./Assets/Send.svg" alt="" aria-hidden="true" class="floating-chat-send-icon" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section class="insight-generated-comparison ArgoGlass-Base" id="insightGeneratedComparison" hidden aria-label="Generated savings comparison"></section>
+          </div>
+        </div>
+      </section>
+
+      <div class="chat-focus-overlay" id="insightChatFocusOverlay" aria-hidden="true"></div>
+
+      <aside class="presenter-panel" id="presenterPanel" aria-label="Presenter panel" aria-hidden="true">
+        <div class="presenter-panel-head">
+          <strong>Presenter Panel</strong>
+          <button class="presenter-close" type="button" id="presenterClose">Close</button>
+        </div>
+
+        <label class="presenter-field">
+          <span>Theme</span>
+          <select id="presenterTheme">
+            <option value="healthcare">Healthcare</option>
+            <option value="smb">SMB Ops</option>
+            <option value="future">Autonomous Ops</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Scenario</span>
+          <select id="presenterScenario">
+            <option value="auto">Auto-pass</option>
+            <option value="flagged">Flagged</option>
+            <option value="mixed">Mixed</option>
+          </select>
+        </label>
+
+        <label class="presenter-field">
+          <span>Speed</span>
+          <select id="presenterSpeed">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+
+        <div class="presenter-actions">
+          <button class="presenter-btn" id="presenterReset" type="button">Reset run</button>
+          <button class="presenter-btn" id="presenterFreeze" type="button">Freeze motion</button>
+          <button class="presenter-btn" id="presenterShare" type="button">Copy shareable link</button>
+        </div>
+      </aside>
+
+    </main>
+
+    <script type="module" src="./insight.js"></script>
+  </body>
+</html>
