@@ -29,6 +29,7 @@ const controls = {
   xChannel: document.getElementById('x-channel'),
   yChannel: document.getElementById('y-channel'),
 };
+const hasGlassControls = Object.values(controls).every(Boolean);
 
 const outputs = {
   glassBlur: document.getElementById('v-glass-blur'),
@@ -188,11 +189,13 @@ form.addEventListener('submit', (event) => {
   }, 900);
 });
 
-initControlValues();
-bindControls();
-applyControlValues();
+if (hasGlassControls) {
+  initControlValues();
+  bindControls();
+  applyControlValues();
+}
 
-if (copyPresetButton && presetCode) {
+if (hasGlassControls && copyPresetButton && presetCode) {
   copyPresetButton.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(presetCode.value);
@@ -207,7 +210,7 @@ if (copyPresetButton && presetCode) {
   });
 }
 
-if (panelToggle && controlPanel) {
+if (hasGlassControls && panelToggle && controlPanel) {
   panelToggle.addEventListener('click', () => {
     const collapsed = controlPanel.classList.toggle('is-collapsed');
     panelToggle.textContent = collapsed ? 'Show Controls' : 'Hide Controls';
