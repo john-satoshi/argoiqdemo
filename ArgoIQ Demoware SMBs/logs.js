@@ -180,12 +180,12 @@ function pulse(node) {
 
 function getStagesForTheme(themeId) {
   if (themeId === "healthcare") {
-    return ["Input normalization", "Validation", "Context enrichment", "Evaluation pass"];
+    return ["Input normalization", "Validation", "Record verification", "Evaluation pass"];
   }
   if (themeId === "future") {
-    return ["Signal intake", "Policy validation", "Context enrichment", "Evaluation pass"];
+    return ["Signal intake", "Policy validation", "Record verification", "Evaluation pass"];
   }
-  return ["Input normalization", "Validation", "Context enrichment", "Evaluation pass"];
+  return ["Input normalization", "Validation", "Record verification", "Evaluation pass"];
 }
 
 function buildRows(theme, scenario) {
@@ -267,14 +267,14 @@ function buildFlaggedRows(theme) {
     stages[0] || "Input normalization",
     stages[0] || "Input normalization",
     stages[1] || "Validation",
-    stages[2] || "Context enrichment",
+    stages[2] || "Record verification",
     stages[1] || "Validation",
     stages[3] || "Evaluation pass",
-    stages[2] || "Context enrichment",
+    stages[2] || "Record verification",
     stages[3] || "Evaluation pass",
     stages[1] || "Validation",
     stages[0] || "Input normalization",
-    stages[2] || "Context enrichment",
+    stages[2] || "Record verification",
     stages[3] || "Evaluation pass",
     stages[1] || "Validation",
     stages[0] || "Input normalization",

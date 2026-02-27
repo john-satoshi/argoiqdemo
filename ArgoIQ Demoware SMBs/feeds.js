@@ -437,7 +437,7 @@ function initFeedProcessingDemo() {
           visual: { type: "scan", startAtPercent: 94, docs: ["Doc1", "Doc2", "Doc3"], switchMs: 900, cycles: 2 },
         },
         context_enrichment_validation: {
-          label: "Context enrichment and validation",
+          label: "Record verification and validation",
           context: {
             historicalEntityLabel: `historical ${entityPluralLower}`,
             ruleDomain: ruleDomainLabel,
@@ -515,7 +515,7 @@ function initFeedProcessingDemo() {
           visual: { type: "scan", startAtPercent: 94, docs: ["Doc1", "Doc2", "Doc3"], switchMs: 900, cycles: 2 },
         },
         context_enrichment_validation: {
-          label: "Context enrichment and validation",
+          label: "Record verification and validation",
           context: {
             historicalEntityLabel: `historical ${entityPluralLower}`,
             ruleDomain: ruleDomainLabel,
