@@ -106,13 +106,13 @@ export const themePacks = {
     nav: { dashboard: "Dashboard", feeds: "Feeds", insight: "Insight" },
     modules: {
       primary: {
-        name: "Revenue Ops",
-        tag: "RevOps",
-        title: "CRM & Revenue Ops Cleanup",
-        description: "Ingests new leads, validates CRM data, enriches missing fields, and routes edge cases to human QA before impact.",
+        name: "Billing Ops",
+        tag: "Billing",
+        title: "Billing, Onboarding & Customer Ops",
+        description: "Processes billing tasks, onboarding requests, and customer follow-up work, validates records, and routes exceptions to human review before completion.",
       },
     },
-    entityNaming: { singular: "Lead", plural: "Leads", idPrefixes: ["L", "INV", "VND", "BKG"] },
+    entityNaming: { singular: "Task", plural: "Tasks", idPrefixes: ["L", "INV", "VND", "BKG"] },
     statusVocabulary: {
       validated: "Validated",
       flagged: "Flagged",
@@ -121,12 +121,12 @@ export const themePacks = {
     },
     roleTitles: {
       primaryOperator: "Ops QA Specialist",
-      secondaryOperator: "RevOps Specialist",
+      secondaryOperator: "Operations Specialist",
     },
     workflowPhases: {
-      inputPhaseSteps: ["Input normalization", "Field validation", "Entity enrichment"],
+      inputPhaseSteps: ["Input normalization", "Field validation", "Record verification"],
       evaluationChecks: ["Duplicate detection", "Risk scoring", "Ownership check"],
-      outputPhaseSteps: ["Auto route", "Human QA", "CRM sync"],
+      outputPhaseSteps: ["Auto route", "Human QA", "System update"],
     },
     kpiLabels: {
       activeCases: "Active cases:",
@@ -136,8 +136,8 @@ export const themePacks = {
       operatorsAvailable: "Operators available:",
     },
     liveEventTemplates: [
-      "{entity} {id} enriched, deduped, and synced",
-      "{entity} {id} validated and routed to account owner",
+      "{entity} {id} reviewed, validated, and completed",
+      "{entity} {id} validated and routed to the right team",
       "{entity} {id} flagged for billing mismatch review",
       "{entity} {id} routed to {operatorRole}",
       "{entity} {id} completed with status: {status}",
@@ -146,8 +146,8 @@ export const themePacks = {
     samplePatterns: { idPattern: "{prefix}-{n}", timestampPattern: "HH:mm:ss" },
     microcopy: {
       liveEventLabel: "Live Event:",
-      whatsHappening: "Ops workflows are active and routing in real time.",
-      stuckOrRisky: "One workflow is waiting on human QA confirmation.",
+      whatsHappening: "Back-office workflows are active and routing in real time.",
+      stuckOrRisky: "One task is waiting on human review before completion.",
       ctaPrimary: "View Live Cases",
       tooltip: "Live supervision signal",
     },
@@ -155,11 +155,11 @@ export const themePacks = {
       placeholder: "Ask about live workflow status",
       statusQuestionTemplate: "What’s happening with {workflow} right now?",
       riskQuestion: "Anything stuck or risky?",
-      aiLabel: "are being enriched and validated by AI",
-      humanLabel: "are under RevOps QA review",
+      aiLabel: "are being reviewed and validated by AI",
+      humanLabel: "are under operations review",
       riskSignal: "low data confidence",
       performanceMetric: "Avg resolution time",
-      riskMetric: "Pipeline risk",
+      riskMetric: "Follow-up workload risk",
     },
   },
   future: {

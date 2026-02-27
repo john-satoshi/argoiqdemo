@@ -416,7 +416,7 @@ function initFeedProcessingDemo() {
   const flowDefs = {
     flowA: {
       claimId: flowAId,
-      holdAfterMs: 1800,
+      holdAfterMs: 400,
       phaseSequence: ["context_enrichment_validation", "evaluation_pass", "completion"],
       phases: {
         ingestion: {
@@ -437,7 +437,7 @@ function initFeedProcessingDemo() {
           visual: { type: "scan", startAtPercent: 94, docs: ["Doc1", "Doc2", "Doc3"], switchMs: 900, cycles: 2 },
         },
         context_enrichment_validation: {
-          label: "Context enrichment and validation",
+          label: "Record verification and validation",
           context: {
             historicalEntityLabel: `historical ${entityPluralLower}`,
             ruleDomain: ruleDomainLabel,
@@ -495,7 +495,10 @@ function initFeedProcessingDemo() {
     flowB: {
       claimId: flowBId,
       freezeOnFinal: true,
-      phaseSequence: ["ingestion", "input_normalization", "context_enrichment_validation", "evaluation_pass", "requesting_operator"],
+      phaseSequence: ["input_normalization", "context_enrichment_validation", "evaluation_pass", "requesting_operator"],
+      stepMultiplier: 1.85,
+      delayMultiplier: 0.45,
+      transitionDelayMs: 220,
       phases: {
         ingestion: {
           label: "Ingestion phase",
@@ -512,10 +515,10 @@ function initFeedProcessingDemo() {
             "Normalizing date formats",
             "Validating required fields",
           ],
-          visual: { type: "scan", startAtPercent: 94, docs: ["Doc1", "Doc2", "Doc3"], switchMs: 900, cycles: 2 },
+          visual: { type: "scan", startAtPercent: 0, docs: ["Doc1", "Doc2", "Doc3"], switchMs: 350, cycles: 1 },
         },
         context_enrichment_validation: {
-          label: "Context enrichment and validation",
+          label: "Record verification and validation",
           context: {
             historicalEntityLabel: `historical ${entityPluralLower}`,
             ruleDomain: ruleDomainLabel,
@@ -1012,19 +1015,22 @@ function initFeedProcessingDemo() {
         renderPhase();
         setProgress(0);
         tickProgress();
-      }, 450);
+      }, flow.transitionDelayMs || 450);
       return;
     }
 
+    const flow = getFlow();
     const remaining = 100 - state.progress;
     const baseStep = state.progress < 55 ? 3.6 : state.progress < 85 ? 2.8 : 1.8;
     const jitter = (Math.random() - 0.5) * 1.1;
-    const step = Math.max(0.7, Math.min(4.4, baseStep + jitter));
+    const stepMultiplier = flow.stepMultiplier || 1;
+    const step = Math.max(0.7, Math.min(8, (baseStep + jitter) * stepMultiplier));
     setProgress(Math.min(100, Math.round(state.progress + step)));
 
-    const baseDelay = state.progress < 60 ? 46 : state.progress < 90 ? 62 : 84;
+    const delayMultiplier = flow.delayMultiplier || 1;
+    const baseDelay = (state.progress < 60 ? 46 : state.progress < 90 ? 62 : 84) * delayMultiplier;
     const delayJitter = Math.floor(Math.random() * 44);
-    const nearEndPause = remaining < 12 ? Math.floor(Math.random() * 80) : 0;
+    const nearEndPause = remaining < 12 ? Math.floor(Math.random() * 80 * delayMultiplier) : 0;
     progressTimer = window.setTimeout(tickProgress, baseDelay + delayJitter + nearEndPause);
   };
 
