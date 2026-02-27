@@ -2,6 +2,10 @@ const form = document.getElementById('loginForm');
 const loginButton = document.getElementById('loginButton');
 const tabLogin = document.getElementById('tabLogin');
 const tabCreate = document.getElementById('tabCreate');
+const loginTagline = document.getElementById('loginTagline');
+const loginPresenterPanel = document.getElementById('loginPresenterPanel');
+const loginPresenterClose = document.getElementById('loginPresenterClose');
+const loginPresenterTheme = document.getElementById('loginPresenterTheme');
 const presetCode = document.getElementById('preset-code');
 const copyPresetButton = document.getElementById('copy-preset');
 const panelToggle = document.getElementById('panel-toggle');
@@ -44,6 +48,68 @@ const outputs = {
   gaussStd: document.getElementById('v-gauss-std'),
   displaceScale: document.getElementById('v-displace-scale'),
 };
+
+const LOGIN_TAGLINES = {
+  smb: 'Trusted by SMB teams where accuracy saves time',
+  healthcare: 'Trusted by healthcare teams where accuracy protects outcomes',
+  future: 'Trusted by teams managing high-stakes autonomous workflows',
+};
+const LOGIN_STORAGE_KEY = 'argoiq-demo-profile-v1';
+
+function readStoredProfile() {
+  try {
+    const raw = window.localStorage.getItem(LOGIN_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function getCurrentTheme() {
+  const params = new URLSearchParams(window.location.search);
+  const urlTheme = params.get('theme');
+  if (urlTheme && LOGIN_TAGLINES[urlTheme]) return urlTheme;
+
+  const parsed = readStoredProfile();
+  const storedTheme = parsed?.currentThemeId || parsed?.theme;
+  return LOGIN_TAGLINES[storedTheme] ? storedTheme : 'smb';
+}
+
+function writeTheme(themeId) {
+  const safeTheme = LOGIN_TAGLINES[themeId] ? themeId : 'smb';
+  const params = new URLSearchParams(window.location.search);
+  params.set('theme', safeTheme);
+  const nextUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState({}, '', nextUrl);
+
+  const stored = readStoredProfile() || {};
+  const nextProfile = {
+    ...stored,
+    currentThemeId: safeTheme,
+    theme: safeTheme,
+  };
+
+  try {
+    window.localStorage.setItem(LOGIN_STORAGE_KEY, JSON.stringify(nextProfile));
+  } catch {
+    // noop
+  }
+}
+
+function applyLoginThemeCopy() {
+  if (!loginTagline) return;
+  const themeId = getCurrentTheme();
+  loginTagline.textContent = LOGIN_TAGLINES[themeId] || LOGIN_TAGLINES.smb;
+  if (loginPresenterTheme) {
+    loginPresenterTheme.value = themeId;
+  }
+}
+
+function setLoginPresenterOpen(open) {
+  if (!loginPresenterPanel) return;
+  loginPresenterPanel.classList.toggle('is-open', open);
+  loginPresenterPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+}
 
 function parseCssNumber(varName, fallback = 0) {
   const raw = rootComputed.getPropertyValue(varName).trim();
@@ -185,7 +251,18 @@ form.addEventListener('submit', (event) => {
   loginButton.textContent = 'Please wait...';
 
   window.setTimeout(() => {
-    window.location.href = './dashboard.html';
+    const params = new URLSearchParams(window.location.search);
+    const stored = readStoredProfile() || {};
+    const nextUrl = new URL('./dashboard.html', window.location.href);
+    nextUrl.searchParams.set('theme', getCurrentTheme());
+
+    const scenario = params.get('scenario') || stored?.currentScenarioId || stored?.scenario;
+    const speed = params.get('speed') || stored?.speedMultiplier || stored?.speed;
+
+    if (scenario) nextUrl.searchParams.set('scenario', String(scenario));
+    if (speed) nextUrl.searchParams.set('speed', String(speed));
+
+    window.location.href = nextUrl.toString();
   }, 900);
 });
 
@@ -217,3 +294,23 @@ if (hasGlassControls && panelToggle && controlPanel) {
     panelToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
   });
 }
+
+document.addEventListener('keydown', (event) => {
+  if (event.key.toLowerCase() !== 'p') return;
+  setLoginPresenterOpen(!loginPresenterPanel?.classList.contains('is-open'));
+});
+
+if (loginPresenterClose) {
+  loginPresenterClose.addEventListener('click', () => {
+    setLoginPresenterOpen(false);
+  });
+}
+
+if (loginPresenterTheme) {
+  loginPresenterTheme.addEventListener('change', (event) => {
+    writeTheme(event.target.value);
+    applyLoginThemeCopy();
+  });
+}
+
+applyLoginThemeCopy();

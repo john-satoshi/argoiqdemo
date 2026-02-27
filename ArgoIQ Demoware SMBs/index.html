@@ -37,7 +37,7 @@
               <path d="M107.071 7.64404V6.4205H108.329V2.79267H107.071V1.56913H110.973V2.79267H109.715V6.4205H110.973V7.64404H107.071ZM114.862 8.24298L113.647 5.64189H114.58L115.795 8.24298H114.862ZM114.152 7.78094C113.662 7.78094 113.242 7.6583 112.894 7.41303C112.552 7.16775 112.29 6.81124 112.107 6.3435C111.93 5.87005 111.842 5.29394 111.842 4.61514C111.842 3.93635 111.93 3.36023 112.107 2.88679C112.29 2.41334 112.552 2.05398 112.894 1.8087C113.242 1.55772 113.662 1.43223 114.152 1.43223C114.643 1.43223 115.059 1.55772 115.401 1.8087C115.749 2.05398 116.012 2.41334 116.189 2.88679C116.371 3.36023 116.462 3.93635 116.462 4.61514C116.462 5.29394 116.371 5.87005 116.189 6.3435C116.012 6.81124 115.749 7.16775 115.401 7.41303C115.059 7.6583 114.643 7.78094 114.152 7.78094ZM114.152 6.58307C114.352 6.58307 114.517 6.51747 114.648 6.38628C114.785 6.24938 114.885 6.03833 114.948 5.75312C115.016 5.46221 115.051 5.08288 115.051 4.61514C115.051 4.1474 115.016 3.76808 114.948 3.47717C114.885 3.18625 114.785 2.97235 114.648 2.83545C114.517 2.69855 114.352 2.6301 114.152 2.6301C113.958 2.6301 113.793 2.69855 113.656 2.83545C113.519 2.97235 113.416 3.18625 113.348 3.47717C113.285 3.76808 113.254 4.1474 113.254 4.61514C113.254 5.08288 113.285 5.46221 113.348 5.75312C113.416 6.03833 113.519 6.24938 113.656 6.38628C113.793 6.51747 113.958 6.58307 114.152 6.58307Z" fill="white"/>
             </svg>
           </div>
-          <p>Trusted by SMB teams where accuracy saves time</p>
+          <p id="loginTagline">Trusted by SMB teams where accuracy saves time</p>
         </header>
 
         <div class="auth-switch" role="tablist" aria-label="Auth mode">
@@ -70,6 +70,22 @@
           <button type="button" class="link-cta">Sign up</button>
         </footer>
       </section>
+
+      <aside class="presenter-panel" id="loginPresenterPanel" aria-label="Presenter panel" aria-hidden="true">
+        <div class="presenter-panel-head">
+          <strong>Presenter Panel</strong>
+          <button class="presenter-close" type="button" id="loginPresenterClose">Close</button>
+        </div>
+
+        <label class="presenter-field">
+          <span>Audience</span>
+          <select id="loginPresenterTheme">
+            <option value="smb">SMB Ops</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="future">Autonomous Ops</option>
+          </select>
+        </label>
+      </aside>
     </main>
 
     <script src="./app.js"></script>
